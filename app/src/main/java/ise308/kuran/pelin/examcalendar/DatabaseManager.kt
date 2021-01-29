@@ -1,6 +1,7 @@
 package ise308.kuran.pelin.examcalendar
 
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -9,7 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteQueryBuilder
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.contentValuesOf
 import java.lang.Exception
 
 class DatabaseManager(context: Context) {
@@ -23,6 +23,7 @@ class DatabaseManager(context: Context) {
     var colType = "ExamType"
     var colTime = "ExamTime"
     var colBool = "IsStudied"
+
 
     //version
     var dbVersion = 1
@@ -56,7 +57,7 @@ class DatabaseManager(context: Context) {
     }
 
     fun insert(values: ContentValues): Long {
-       var inserted = sqlDB!!.insert(dbTable, "", values)
+        var inserted = sqlDB!!.insert(dbTable, "", values)
 
         return inserted
 
@@ -76,7 +77,7 @@ class DatabaseManager(context: Context) {
 
     fun delete(selection: String, selectionArgs: Array<String>): Int {
         var deleted = sqlDB!!.delete(dbTable, selection, selectionArgs)
-        sqlDB!!.close()
+
         return deleted
     }
 
@@ -86,28 +87,37 @@ class DatabaseManager(context: Context) {
         return updated
     }
 
+
+    @SuppressLint("ResourceAsColor")
     fun editUpdate(
         id: String,
         lecture: String,
         examDate: String,
         examType: String,
         isStudied: Boolean
+
+
     ): Boolean {
         val myDb = this.sqlDB
         val values = ContentValues()
-        var flag: Boolean = false
+        var flag = false
         values.put(colTitle, lecture)
         values.put(colTime, examDate)
         values.put(colType, examType)
         values.put(colBool, isStudied)
+
         try {
+
+
             myDb?.update(dbTable, values, "$colID = ?", arrayOf(id))
+
             flag = true
+
         } catch (e: Exception) {
             Log.e(ContentValues.TAG, "Error Updating")
-            flag = false
-        }
 
+
+        }
         return flag
     }
 

@@ -1,14 +1,16 @@
 package ise308.kuran.pelin.examcalendar
 
-import android.content.ContentValues
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadQuery(title: String) {
         var dbManager = DatabaseManager(this)
-        var projections = arrayOf("ID", "Lecture", "ExamType", "ExamTime","IsStudied")
+        var boolIsStudied: Boolean = false
+        var projections = arrayOf("ID", "Lecture", "ExamType", "ExamTime", "IsStudied")
         val selectionArgs = arrayOf(title)
         val cursor = dbManager.myQuery(projections, "Lecture like ?", selectionArgs, "Lecture")
         listExams.clear()
@@ -38,8 +41,9 @@ class MainActivity : AppCompatActivity() {
                 val title = cursor.getString(cursor.getColumnIndex("Lecture"))
                 val description = cursor.getString(cursor.getColumnIndex("ExamType"))
                 val time = cursor.getString(cursor.getColumnIndex("ExamTime"))
-                val bool: Boolean = cursor.getInt(cursor.getColumnIndex("IsStudied")) == 0
-                listExams.add(Exam(id, title, description, time, bool))
+                var isStudied: Int = cursor.getInt(cursor.getColumnIndex("IsStudied"))
+                if (isStudied == 1) boolIsStudied = true
+                listExams.add(Exam(id, title, description, time, boolIsStudied))
             } while (cursor.moveToNext())
 
         }
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             mActionBar.subtitle = "You have " + total + " exam(s)."
 
         }
-        cursor.close()
+
 
 
     }
@@ -90,15 +94,19 @@ class MainActivity : AppCompatActivity() {
             this.context = context
         }
 
+        @SuppressLint("ResourceAsColor")
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            var dbManager = DatabaseManager(this.context!!)
             var myView = layoutInflater.inflate(R.layout.exams, null)
+            var cardView = myView.findViewById<CardView>(R.id.cardView)
             var myExam = listExamsAdapter[position]
-
             myView.findViewById<TextView>(R.id.titleLecture).text = myExam.examLecture
             myView.findViewById<TextView>(R.id.titleExamType).text = myExam.examType
             myView.findViewById<TextView>(R.id.examTime).text = myExam.examDay
             var deleteBtn = myView.findViewById<ImageButton>(R.id.deleteBtn)
             var editBtn = myView.findViewById<ImageButton>(R.id.editBtn)
+            if (myExam.boolean!!) cardView.setCardBackgroundColor(R.color.black)
+            else cardView.setCardBackgroundColor(R.color.gray)
             //delete button
             deleteBtn.setOnClickListener {
                 var dbManager = DatabaseManager(this.context!!)
@@ -120,43 +128,51 @@ class MainActivity : AppCompatActivity() {
             }
             //edit//update button click
             editBtn.setOnClickListener {
-                var dbManager = DatabaseManager(this.context!!)
+
                 val inflater = LayoutInflater.from(context)
-                val view = inflater.inflate(R.layout.exams_update,null)
-                val editLecture : TextView = view.findViewById(R.id.editLecture)
-                val editType : TextView = view.findViewById(R.id.editType)
+                val view = inflater.inflate(R.layout.exams_update, null)
+                val editLecture: TextView = view.findViewById(R.id.editLecture)
+                val editType: TextView = view.findViewById(R.id.editType)
                 val editDate: TextView = view.findViewById(R.id.editDate)
+                val sw1: CheckBox = view.findViewById(R.id.isStudied)
 
                 editLecture.text = myExam.examLecture
-                editType.text= myExam.examType
-                editDate.text= myExam.examDay
+                editType.text = myExam.examType
+                editDate.text = myExam.examDay
 
                 val builder = AlertDialog.Builder(context!!)
                     .setTitle("Update Customer Info")
                     .setView(view)
                     .setPositiveButton("Update", DialogInterface.OnClickListener { dialog, which ->
-          //NO VALUE PASSED FOR PARAMETER isSTUDIED
-                        val isUpdate: Boolean = dbManager.editUpdate(myExam.examID.toString(), editLecture.text.toString(),editDate.text.toString(),editType.text.toString(),true)
-                    if(isUpdate){
-                        myExam.examLecture = editLecture.text.toString()
-                        myExam.examType = editType.text.toString()
-                        myExam.examDay = editDate.text.toString()
-                        notifyDataSetChanged()
-                        Toast.makeText(context, "Update Successful", Toast.LENGTH_SHORT).show()
 
-                    }
-                        else{
-                        Toast.makeText(context, "Error Updating", Toast.LENGTH_SHORT).show()
-                    }
-                    }).setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->  })
+                        val isUpdate: Boolean = dbManager.editUpdate(
+                            myExam.examID.toString(),
+                            editLecture.text.toString(),
+                            editDate.text.toString(),
+                            editType.text.toString(),
+                            sw1.isChecked
+                        )
+                        if (isUpdate) {
+
+                            myExam.examLecture = editLecture.text.toString()
+                            myExam.examType = editType.text.toString()
+                            myExam.examDay = editDate.text.toString()
+                            myExam.boolean = sw1.isChecked
+                            notifyDataSetChanged()
+                            Toast.makeText(context, "Update Successful", Toast.LENGTH_SHORT).show()
+
+                        } else {
+                            Toast.makeText(context, "Error Updating", Toast.LENGTH_SHORT).show()
+                        }
+
+
+                    }).setNegativeButton(
+                        "Cancel",
+                        DialogInterface.OnClickListener { dialog, which -> })
                 val alert = builder.create()
                 alert.show()
-                        //updateFun(myExam)
 
-                    }
-
-
-
+            }
             return myView
         }
 
@@ -174,12 +190,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun updateFun(myExam: Exam) {
-        var intent = Intent(this, AddExamActivity::class.java)
-        intent.putExtra("ID", myExam.examID) // put id
-        intent.putExtra("Lecture", myExam.examLecture) //put name
-        intent.putExtra("ExamType", myExam.examType) //put type
-        intent.putExtra("ExamTime", myExam.examDay) // put time
-        startActivity(intent) // start activity
-    }
 }

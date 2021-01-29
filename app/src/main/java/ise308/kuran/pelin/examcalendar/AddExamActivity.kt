@@ -41,9 +41,10 @@ class AddExamActivity : AppCompatActivity() {
         values.put("Lecture", titleEnter.text.toString())
         values.put("ExamTime", dateEnter.text.toString())
         values.put("ExamType", typeEnter.text.toString())
+        values.put("IsStudied",0)
         if (id == 0) {
-            val id = dbManager.insert(values)
-            if (id > 0) {
+            val ID = dbManager.insert(values)
+            if (ID > 0) {
                 Toast.makeText(this, "Exam Added", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
