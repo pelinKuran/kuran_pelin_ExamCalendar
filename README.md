@@ -1,19 +1,26 @@
 # ExamCalendar
-In this project we were responsible for 
--an application that will perform SQLite database read, write
-and query operations.
-  -Create the model class
+In this project we were responsible for <br/>
+-an application that will perform SQLite database read, write 
+and query operations. <br/>
+<br/>
+  -Create the model class <br/>
     - model class must contain at least 4
-      properties. One of these properties must be Boolean
+      properties. One of these properties must be Boolean <br/>
+      <br/>
    -SQLite database will have one table which corresponds to the model class
-   -4 icons in
-    the cardview,for deleting,editing ,copying to dash, sharing the corresponding item.
+   <br/>
+   -4 icons in 
+    the cardview,for deleting,editing ,copying to dash, sharing the corresponding item. <br/>
+    <br/>
    -The background color of
     the item cardview will be set based on the value of the
     boolean property (all trues will be of one color, falses
-    another color)
-    -Delete Confirmation
-    -Edit Fragment
+    another color) <br/>
+    <br/>
+    -Delete Confirmation <br/>
+    <br/>
+    -Edit Fragment <br/>
+    <br/>
     -The action bar at the top of the screen will include an add item icon & search icon
-    This application developed for educational purposes.
+    This application developed for educational purposes.<br/>
     
