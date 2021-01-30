@@ -1,5 +1,5 @@
 # ExamCalendar
-In this project we were responsible for <br/>
+<b> This project contains: </b> <br/>
 -an application that will perform SQLite database read, write 
 and query operations. <br/>
 <br/>
@@ -21,6 +21,7 @@ and query operations. <br/>
     <br/>
     -Edit Fragment <br/>
     <br/>
-    -The action bar at the top of the screen will include an add item icon & search icon
-    This application developed for educational purposes.<br/>
+    -The action bar at the top of the screen will include an add item icon & search icon <br/>
+    <br/>
+    <i> This application developed for educational purposes.</i> <br/>
     
