@@ -1,7 +1,6 @@
 package ise308.kuran.pelin.examcalendar
 
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -9,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteQueryBuilder
 import android.util.Log
-import android.widget.Toast
 import java.lang.Exception
 
 class DatabaseManager(context: Context) {
@@ -40,13 +38,9 @@ class DatabaseManager(context: Context) {
 
     inner class DatabaseHelper(context: Context) :
         SQLiteOpenHelper(context, dbname, null, dbVersion) {
-        // var context: Context? = context
-
         //onCreate will be called when the tables are created for the first time. After executing the first time method will not be called again.
         override fun onCreate(p0: SQLiteDatabase?) {
             p0!!.execSQL(createTableSQL)
-            // Toast.makeText(this.context, "database created...", Toast.LENGTH_SHORT).show()
-
         }
 
         //onUpgrade is called when db version upgraded. Version uprades as db upgraded.
@@ -58,9 +52,8 @@ class DatabaseManager(context: Context) {
 
     fun insert(values: ContentValues): Long {
         var inserted = sqlDB!!.insert(dbTable, "", values)
-
+        sqlDB!!.close()
         return inserted
-
     }
 
     fun myQuery(
@@ -69,33 +62,31 @@ class DatabaseManager(context: Context) {
         selectionArgs: Array<String>,
         sOrder: String
     ): Cursor {
-        val vt = SQLiteQueryBuilder();
-        vt.tables = dbTable
-        return vt.query(sqlDB, projection, selection, selectionArgs, null, null, sOrder)
+        val db = SQLiteQueryBuilder();
+        db.tables = dbTable
+
+        return db.query(sqlDB, projection, selection, selectionArgs, null, null, sOrder)
 
     }
 
     fun delete(selection: String, selectionArgs: Array<String>): Int {
         var deleted = sqlDB!!.delete(dbTable, selection, selectionArgs)
-
+        sqlDB!!.close()
         return deleted
     }
 
     fun update(values: ContentValues, selection: String, selectionArgs: Array<String>): Int {
         var updated = sqlDB!!.update(dbTable, values, selection, selectionArgs)
-
+        sqlDB!!.close()
         return updated
     }
 
-
-    @SuppressLint("ResourceAsColor")
     fun editUpdate(
         id: String,
         lecture: String,
         examDate: String,
         examType: String,
         isStudied: Boolean
-
 
     ): Boolean {
         val myDb = this.sqlDB
@@ -108,15 +99,11 @@ class DatabaseManager(context: Context) {
 
         try {
 
-
             myDb?.update(dbTable, values, "$colID = ?", arrayOf(id))
-
             flag = true
 
         } catch (e: Exception) {
             Log.e(ContentValues.TAG, "Error Updating")
-
-
         }
         return flag
     }

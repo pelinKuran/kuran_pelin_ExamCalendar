@@ -49,19 +49,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         //adapter
-
         var myExamsAdapter = MyExamsAdapter(this, listExams)
         //set adapter
         var examList: ListView = findViewById(R.id.examList)
         examList.adapter = myExamsAdapter
-        // get count from LV
+        // get count from listview to show.
         val total = examList.count
         //actionbar
         val mActionBar = supportActionBar
         if (mActionBar != null) {
-            //set subtitle
+            //show count
             mActionBar.subtitle = "You have " + total + " exam(s)."
         }
+        cursor.close()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,14 +70,14 @@ class MainActivity : AppCompatActivity() {
         val searchView: SearchView = menu!!.findItem(R.id.app_search_bar).actionView as SearchView
         val sm = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.setSearchableInfo(sm.getSearchableInfo(componentName))
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                loadQuery ("%$p0%")
+                loadQuery("%$p0%")
                 return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                loadQuery ("%$p0%")
+                loadQuery("%$p0%")
                 return false
             }
         });
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //MyExamsAdapter
     inner class MyExamsAdapter : BaseAdapter {
         var listExamsAdapter = ArrayList<Exam>()
         var context: Context? = null
@@ -106,19 +108,20 @@ class MainActivity : AppCompatActivity() {
 
         @SuppressLint("ResourceAsColor")
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var dbManager = DatabaseManager(this.context!!)
-            var myView = layoutInflater.inflate(R.layout.exams, null)
-            var cardView = myView.findViewById<CardView>(R.id.cardView)
-            var myExam = listExamsAdapter[position]
+            val dbManager = DatabaseManager(this.context!!)
+            val myView = layoutInflater.inflate(R.layout.exams, null)
+            val cardView = myView.findViewById<CardView>(R.id.cardView)
+            val myExam = listExamsAdapter[position]
             myView.findViewById<TextView>(R.id.titleLecture).text = myExam.examLecture
             myView.findViewById<TextView>(R.id.titleExamType).text = myExam.examType
             myView.findViewById<TextView>(R.id.examTime).text = myExam.examDay
-            var deleteBtn = myView.findViewById<ImageButton>(R.id.deleteBtn)
-            var editBtn = myView.findViewById<ImageButton>(R.id.editBtn)
+            val deleteBtn = myView.findViewById<ImageButton>(R.id.deleteBtn)
+            val editBtn = myView.findViewById<ImageButton>(R.id.editBtn)
             val title = myView.findViewById<TextView>(R.id.titleLecture).text.toString()
             val type = myView.findViewById<TextView>(R.id.titleExamType).text.toString()
             val time = myView.findViewById<TextView>(R.id.examTime).text.toString()
             val s = "Lecture: " + title + "\n" + "Exam: " + type + "\n" + "Date: " + time
+            //set backgorund colour according to bool.
             if (myExam.boolean!!) {
                 cardView.setCardBackgroundColor(R.color.black)
             }
@@ -197,12 +200,15 @@ class MainActivity : AppCompatActivity() {
             }
             return myView
         }
+
         override fun getItem(position: Int): Any {
             return listExamsAdapter[position]
         }
+
         override fun getItemId(position: Int): Long {
             return position.toLong()
         }
+
         override fun getCount(): Int {
             return listExamsAdapter.size
         }
