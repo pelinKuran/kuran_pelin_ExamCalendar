@@ -1,4 +1,5 @@
 # ExamCalendar
+<b>Important! Don't Use Dark Mode to get full visiual performance. </b>
 <b> This project contains: </b> <br/>
 -an application that will perform SQLite database read, write 
 and query operations. <br/>
@@ -25,4 +26,4 @@ and query operations. <br/>
     <br/>
     <i> This application developed for educational purposes.</i> <br/>
     
-<b>Important! Don't Use Dark Mode to get full visiual performance. </b>
+
