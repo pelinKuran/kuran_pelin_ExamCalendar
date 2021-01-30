@@ -40,12 +40,12 @@ class DatabaseManager(context: Context) {
 
     inner class DatabaseHelper(context: Context) :
         SQLiteOpenHelper(context, dbname, null, dbVersion) {
-        var context: Context? = context
+        // var context: Context? = context
 
         //onCreate will be called when the tables are created for the first time. After executing the first time method will not be called again.
         override fun onCreate(p0: SQLiteDatabase?) {
             p0!!.execSQL(createTableSQL)
-            Toast.makeText(this.context, "database created...", Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this.context, "database created...", Toast.LENGTH_SHORT).show()
 
         }
 

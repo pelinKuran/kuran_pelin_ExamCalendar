@@ -3,8 +3,8 @@
     <string name="Title">Lecture</string>
     <string name="exam_time">Exam Time</string>
     <string name="exam_type">exam type</string>
-    <string name="enter_lecture_name">Enter Lecture Name</string>
-    <string name="enter_exam_date">Enter Exam Date</string>
-    <string name="enter_exam_type">Enter exam type</string>
+    <string name="enter_lecture_name">enter lecture name</string>
+    <string name="enter_exam_date">enter exam date</string>
+    <string name="enter_exam_type">enter exam type</string>
     <string name="add_exam">Add Exam</string>
 </resources>

@@ -4,7 +4,9 @@ import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.CalendarView
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import java.lang.Exception
 
@@ -18,13 +20,23 @@ class AddExamActivity : AppCompatActivity() {
 
         try {
             val titleEnter: EditText = findViewById(R.id.TitleEnter)
-            val dateEnter: EditText = findViewById(R.id.ExamDateEnter)
+            //val dateEnter: EditText = findViewById(R.id.ExamDateEnter)
             val typeEnter: EditText = findViewById(R.id.ExamTypeEnter)
+            val dateEnter: CalendarView = findViewById(R.id.calendar)
+            var calendarView: CalendarView = findViewById(R.id.calendar)
+            var dateView: TextView = findViewById(R.id.dateView)
+
+            //take the date
+            calendarView.setOnDateChangeListener(CalendarView.OnDateChangeListener { calendarView: CalendarView, i: Int, i1: Int, i2: Int ->
+                val date = i2.toString() + "−" + (i1 + 1) + "−" + i
+                dateView.text = date
+            })
+
             val bundle: Bundle? = intent.extras
             id = bundle!!.getInt("ID", 0)
             if (id != 0) {
                 titleEnter.setText(bundle.getString("Lecture"))
-                dateEnter.setText(bundle.getString("ExamType"))
+                dateView.text = bundle.getString("ExamType")
                 typeEnter.setText(bundle.getString("ExamTime"))
             }
         } catch (ex: Exception) {
@@ -33,7 +45,7 @@ class AddExamActivity : AppCompatActivity() {
 
     fun addFun(view: View) {
         val titleEnter: EditText = findViewById(R.id.TitleEnter)
-        val dateEnter: EditText = findViewById(R.id.ExamDateEnter)
+        val dateEnter: TextView = findViewById(R.id.dateView)
         val typeEnter: EditText = findViewById(R.id.ExamTypeEnter)
 
         var dbManager = DatabaseManager(this)
@@ -41,7 +53,7 @@ class AddExamActivity : AppCompatActivity() {
         values.put("Lecture", titleEnter.text.toString())
         values.put("ExamTime", dateEnter.text.toString())
         values.put("ExamType", typeEnter.text.toString())
-        values.put("IsStudied",0)
+
         if (id == 0) {
             val ID = dbManager.insert(values)
             if (ID > 0) {
