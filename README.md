@@ -3,7 +3,7 @@
 -an application that will perform SQLite database read, write 
 and query operations. <br/>
 <br/>
-  -Create the model class <br/>
+  -Model class <br/>
     - model class must contain at least 4
       properties. One of these properties must be Boolean <br/>
       <br/>
