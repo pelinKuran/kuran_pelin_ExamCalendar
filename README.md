@@ -25,3 +25,4 @@ and query operations. <br/>
     <br/>
     <i> This application developed for educational purposes.</i> <br/>
     
+<b>Important! Don't Use Dark Mode to get full visiual performance. </b>
