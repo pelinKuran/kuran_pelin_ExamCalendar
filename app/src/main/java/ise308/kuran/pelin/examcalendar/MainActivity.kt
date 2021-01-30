@@ -1,6 +1,7 @@
 package ise308.kuran.pelin.examcalendar
 
 import android.annotation.SuppressLint
+import android.app.SearchManager
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 listExams.add(Exam(id, title, description, time, boolIsStudied))
             } while (cursor.moveToNext())
         }
+
         //adapter
 
         var myExamsAdapter = MyExamsAdapter(this, listExams)
@@ -64,6 +66,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        val searchView: SearchView = menu!!.findItem(R.id.app_search_bar).actionView as SearchView
+        val sm = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView.setSearchableInfo(sm.getSearchableInfo(componentName))
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                loadQuery ("%$p0%")
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                loadQuery ("%$p0%")
+                return false
+            }
+        });
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -179,18 +195,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent.createChooser(shareIntent, s))
 
             }
-
             return myView
         }
-
         override fun getItem(position: Int): Any {
             return listExamsAdapter[position]
         }
-
         override fun getItemId(position: Int): Long {
             return position.toLong()
         }
-
         override fun getCount(): Int {
             return listExamsAdapter.size
         }
