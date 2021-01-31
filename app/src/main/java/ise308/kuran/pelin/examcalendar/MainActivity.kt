@@ -6,7 +6,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.*
@@ -47,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                 listExams.add(Exam(id, title, description, time, boolIsStudied))
             } while (cursor.moveToNext())
         }
-
         //adapter
         var myExamsAdapter = MyExamsAdapter(this, listExams)
         //set adapter
@@ -62,8 +60,8 @@ class MainActivity : AppCompatActivity() {
             mActionBar.subtitle = "You have " + total + " exam(s)."
         }
         cursor.close()
-
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         val searchView: SearchView = menu!!.findItem(R.id.app_search_bar).actionView as SearchView
@@ -79,18 +77,16 @@ class MainActivity : AppCompatActivity() {
                 loadQuery("%$p0%")
                 return false
             }
-        });
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item != null) {
-            when (item.itemId) {
-                R.id.addExam -> {
-                    startActivity(Intent(this, AddExamActivity::class.java))
-                }
-
+        when (item.itemId) {
+            R.id.addExam -> {
+                startActivity(Intent(this, AddExamActivity::class.java))
             }
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -127,17 +123,17 @@ class MainActivity : AppCompatActivity() {
             //delete button click
             deleteBtn.setOnClickListener {
                 var dbManager = DatabaseManager(this.context!!)
-                val alertDialog = AlertDialog.Builder(context!!)
+                AlertDialog.Builder(context!!)
                     .setTitle("DELETE")
                     .setMessage("Are You Sure?")
                     .setPositiveButton(
                         "Yes",
-                        DialogInterface.OnClickListener { dialogInterface: DialogInterface, i: Int ->
+                        DialogInterface.OnClickListener { _: DialogInterface, _: Int ->
                             val selectionArgs = arrayOf(myExam.examID.toString())
                             dbManager.delete("ID=?", selectionArgs)
                             loadQuery("%")
                         })
-                    .setNegativeButton("No", DialogInterface.OnClickListener { dialog, which -> })
+                    .setNegativeButton("No", DialogInterface.OnClickListener { _, _ -> })
                     .setIcon(R.drawable.ic_action_warning)
                     .show()
             }
@@ -147,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 val view = inflater.inflate(R.layout.exams_update, null)
                 val editLecture: TextView = view.findViewById(R.id.editLecture)
                 val editType: TextView = view.findViewById(R.id.editType)
-                val editDate: TextView = view.findViewById(R.id.editDate)
+                val editDate: TextView = view.findViewById(R.id.editTime)
                 val sw1: CheckBox = view.findViewById(R.id.isStudied)
                 editLecture.text = myExam.examLecture
                 editType.text = myExam.examType
@@ -155,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(context!!)
                     .setTitle("UPDATE EXAM")
                     .setView(view)
-                    .setPositiveButton("Update", DialogInterface.OnClickListener { dialog, which ->
+                    .setPositiveButton("Update", DialogInterface.OnClickListener { _, _ ->
                         val isUpdate: Boolean = dbManager.editUpdate(
                             myExam.examID.toString(),
                             editLecture.text.toString(),
@@ -177,13 +173,12 @@ class MainActivity : AppCompatActivity() {
                         }
                     }).setNegativeButton(
                         "Cancel",
-                        DialogInterface.OnClickListener { dialog, which -> })
+                        DialogInterface.OnClickListener { _, _ -> })
                 val alert = builder.create()
                 alert.show()
             }
             //copy button click
             myView.findViewById<ImageButton>(R.id.copyButton).setOnClickListener {
-
                 val copy = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 copy.text = s // added to clipboard
                 Toast.makeText(this@MainActivity, "Copied", Toast.LENGTH_SHORT).show()
@@ -195,7 +190,6 @@ class MainActivity : AppCompatActivity() {
                 shareIntent.type = "text/plain"
                 shareIntent.putExtra(Intent.EXTRA_TEXT, s)
                 startActivity(Intent.createChooser(shareIntent, s))
-
             }
             return myView
         }

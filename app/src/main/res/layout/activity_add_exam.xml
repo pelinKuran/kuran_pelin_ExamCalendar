@@ -14,7 +14,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/exams_padding_margin"
             android:elevation="3dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="3dp">
@@ -22,73 +22,64 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp"
-                >
+                android:layout_margin="@dimen/exams_padding_margin"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:padding="5dp">
+                    android:padding="@dimen/exams_padding_margin">
 
                     <TextView
                         android:id="@+id/textView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Lecture:"
+                        android:text="@string/lecture"
                         android:textColor="@color/purple_500"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/TitleEnter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                            android:textStyle="italic"
-                        android:hint="@string/enter_lecture_name"
-                        android:padding="10dp"
                         android:gravity="top"
-                        android:singleLine="true" />
+                        android:hint="@string/enter_lecture_name"
+                        android:padding="@dimen/exams_elevation_margin"
+                        android:singleLine="true"
+                        android:textStyle="italic" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:padding="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    >
+                    android:padding="@dimen/exams_padding_margin">
 
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Day:"
+                        android:text="@string/day"
                         android:textColor="@color/purple_500"
-                        android:textStyle="bold"
-                        android:textSize="18dp" />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/dateView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:paddingLeft="40dp"
-
+                        android:paddingStart="40dp"
                         android:textColor="@android:color/tertiary_text_light"
-                        android:textSize="18sp" />
+                        android:textSize="@dimen/text_size" />
                 </LinearLayout>
 
                 <CalendarView
                     android:id="@+id/calendar"
                     android:layout_width="match_parent"
                     android:layout_height="308dp"
-                    android:layout_below="@id/dateView"
-                    android:layout_centerInParent="true"
-
-                    android:outlineAmbientShadowColor="@color/gray"
 
                     />
 
@@ -102,19 +93,19 @@
                         android:id="@+id/textView7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Type:"
+                        android:text="@string/type"
                         android:textColor="@color/purple_500"
-                        android:textStyle="bold"
-                        android:textSize="18dp"  />
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/ExamTypeEnter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:textStyle="italic"
                         android:hint="@string/enter_exam_type"
-                        android:padding="10dp" />
+                        android:padding="@dimen/exams_elevation_margin"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -126,10 +117,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:text="Add"
+            android:layout_marginEnd="@dimen/exams_padding_margin"
             android:onClick="addFun"
-            />
+            android:text="@string/add" />
     </LinearLayout>
 </ScrollView>

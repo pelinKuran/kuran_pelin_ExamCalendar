@@ -15,7 +15,7 @@
         android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/name"
         android:textColor="@android:color/tertiary_text_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -26,11 +26,11 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/update_top"
         android:layout_marginTop="36dp"
         android:text="Exam Type:"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -38,25 +38,25 @@
         android:id="@+id/editType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="@dimen/update_margin"
         android:ems="10"
         android:inputType="textPersonName"
         android:shadowColor="#FFFFFF"
-        android:text="Name"
+        android:text="@string/name"
         android:textColor="@android:color/tertiary_text_light"
         android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/editDate"
-        app:layout_constraintTop_toBottomOf="@+id/editDate" />
+        app:layout_constraintEnd_toEndOf="@+id/editTime"
+        app:layout_constraintTop_toBottomOf="@+id/editTime" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/update_top"
         android:layout_marginTop="24dp"
-        android:text="Exam Date:"
+        android:text="@string/exam_date"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -64,12 +64,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/update_top"
         android:layout_marginTop="48dp"
-        android:text="Lecture:"
+        android:text="@string/lecture"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,8 +76,8 @@
         android:id="@+id/isStudied"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="STUDIED"
+        android:layout_marginTop="@dimen/update_margin"
+        android:text="@string/studied"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -86,13 +85,13 @@
         app:layout_constraintTop_toBottomOf="@+id/editType" />
 
     <EditText
-        android:id="@+id/editDate"
+        android:id="@+id/editTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="@string/name"
         android:textColor="@android:color/tertiary_text_light"
         app:layout_constraintEnd_toEndOf="@+id/editLecture"
         app:layout_constraintTop_toBottomOf="@+id/editLecture" />

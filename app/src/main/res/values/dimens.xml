@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="exams_padding_margin">5dp</dimen>
+    <dimen name="exams_elevation_margin">10dp</dimen>
+    <dimen name="text_size">18sp</dimen>
+    <dimen name="update_margin">12dp</dimen>
+    <dimen name="update_top">16dp</dimen>
+
+</resources>

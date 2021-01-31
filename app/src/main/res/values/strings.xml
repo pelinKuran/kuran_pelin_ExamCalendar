@@ -7,4 +7,11 @@
     <string name="enter_exam_date">enter exam date</string>
     <string name="enter_exam_type">enter exam type</string>
     <string name="add_exam">Add Exam</string>
+    <string name="day">Day:</string>
+    <string name="type">Type:</string>
+    <string name="add">Add</string>
+    <string name="lecture">Lecture:</string>
+    <string name="name">Name</string>
+    <string name="exam_date">Exam Date:</string>
+    <string name="studied">STUDIED</string>
 </resources>
